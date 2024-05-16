@@ -10,6 +10,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20'
+      - name: Print path directory
+        run: pwd
       - name: Change directory
         run: cd ../my-app
       - name: Print path directory
