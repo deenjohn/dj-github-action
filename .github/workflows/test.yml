@@ -15,6 +15,6 @@ jobs:
       - name: Print content
         run: ls
       - name: Change directory and Install dependencies
-        run: cd ../.././my-app && npm install
+        run: cd my-app && npm install
       - name: Run tests
         run: npm test
