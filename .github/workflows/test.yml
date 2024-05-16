@@ -18,5 +18,5 @@ jobs:
         run: cd my-app && npm install
       - name: Print content
         run: ls
-      - name: Run tests
-        run: npm test
+      - name: cd my-app && Run tests
+        run: cd my-app && npm test
