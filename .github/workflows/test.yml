@@ -11,7 +11,9 @@ jobs:
         with:
           node-version: '20'
       - name: Change directory
-        run: cd ../../my-app
+        run: cd ../my-app
+      - name: Print path directory
+        run: pwd
       - name: Install dependencies
         run: npm install
       - name: Run tests
