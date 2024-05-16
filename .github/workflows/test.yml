@@ -13,7 +13,7 @@ jobs:
       - name: Print path directory
         run: pwd
       - name: Change directory
-        run: cd ../my-app
+        run: cd ../../
       - name: Print path directory
         run: pwd
       - name: Install dependencies
