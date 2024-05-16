@@ -1,4 +1,4 @@
-name: Release & Publish to Vercel
+name: Test Github Actions
 on: workflow_dispatch
 jobs:
   first_job:
