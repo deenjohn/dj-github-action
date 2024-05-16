@@ -1,0 +1,10 @@
+name: Release & Publish to Vercel
+on: workflow_dispatch
+jobs:
+  first_job:
+    runs-on: macos-12
+    steps:
+      - name: Print Hello
+        run: echo "Hello"
+      - name: Print Goodbye
+        run: echo "Good Bye"
