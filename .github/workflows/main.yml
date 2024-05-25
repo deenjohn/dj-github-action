@@ -1,10 +1,22 @@
-name: Test Github Actions
-on: workflow_dispatch
+name: Run Test
+on: push
 jobs:
-  first_job:
-    runs-on: macos-12
+  test:
+    runs-on: ubuntu-latest
     steps:
-      - name: Print Hello
-        run: echo "Hello"
-      - name: Print Goodbye
-        run: echo "Good Bye"
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Install NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Print path directory
+        run: pwd
+      - name: Print content
+        run: ls
+      - name: Change directory and Install dependencies
+        run: cd my-app && npm install
+      - name: Print content
+        run: ls
+      - name: cd my-app && Run tests
+        run: cd my-app && npm test
