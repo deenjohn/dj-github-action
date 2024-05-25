@@ -3,6 +3,7 @@ on:
   push:
   pull_request:
     types: [opened]
+    branches: [master, stage]
 jobs:
   test:
     runs-on: ubuntu-latest
