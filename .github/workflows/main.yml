@@ -1,4 +1,4 @@
-name: Run Test
+name: Run Main yml
 on: push
 jobs:
   test:
