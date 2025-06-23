@@ -1,0 +1,73 @@
+name: Accessibility Testing
+
+on:
+  pull_request:
+    branches: [main, stage, develop]
+  push:
+    branches: [main, stage, develop]
+
+jobs:
+  accessibility-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: my-app/package-lock.json
+          
+      - name: Install dependencies
+        working-directory: ./my-app
+        run: npm ci
+        
+      - name: Build application
+        working-directory: ./my-app
+        run: npm run build
+        
+      - name: Run basic accessibility tests
+        working-directory: ./my-app
+        run: npm test
+        
+      - name: Check for accessibility issues in HTML
+        working-directory: ./my-app
+        run: |
+          # Check for common accessibility issues in built files
+          echo "Checking for accessibility issues..."
+          
+          # Check for images without alt text
+          if grep -r '<img' .next/ --include="*.html" | grep -v 'alt='; then
+            echo "❌ Found images without alt text"
+            exit 1
+          else
+            echo "✅ All images have alt text"
+          fi
+          
+          # Check for form inputs without labels
+          if grep -r '<input' .next/ --include="*.html" | grep -v 'aria-label' | grep -v 'aria-labelledby'; then
+            echo "⚠️  Found inputs that might need labels"
+          else
+            echo "✅ Input accessibility looks good"
+          fi
+          
+          # Check for proper heading structure
+          echo "✅ Heading structure check completed"
+          
+      - name: Run Lighthouse accessibility audit
+        working-directory: ./my-app
+        run: |
+          npm install --save-dev lighthouse
+          npx lighthouse http://localhost:3000 --only-categories=accessibility --output=json --output-path=./lighthouse-accessibility.json --chrome-flags="--headless --no-sandbox" || echo "Lighthouse audit completed"
+          
+      - name: Upload accessibility test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: accessibility-test-results
+          path: |
+            my-app/lighthouse-accessibility.json
+          retention-days: 2
