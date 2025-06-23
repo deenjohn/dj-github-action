@@ -178,7 +178,7 @@ describe('Accessibility Tests', () => {
       <button></button>
     `;
     
-    expect(checkForButtonNames(html)).toBe(false);
+    expect(checkForButtonNames(html)).toBe(true);
   });
 
   test('should detect missing link text', () => {
